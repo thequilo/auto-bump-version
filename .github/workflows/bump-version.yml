@@ -1,0 +1,20 @@
+name: Push commit
+# Workflow must be triggered manually
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Bump version
+        run: |
+          pip installl bump2version
+          bump2version patch
+      - name: Commit report
+        run: |
+          git config --global user.name 'thequilo'
+          git config --global user.email 'thequilo@users.noreply.github.com'
+          git commit -am "bump version"
+          git push
