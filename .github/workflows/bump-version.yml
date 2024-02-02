@@ -1,6 +1,7 @@
 name: Push commit
 # Workflow must be triggered manually
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
