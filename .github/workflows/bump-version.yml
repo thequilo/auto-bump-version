@@ -2,6 +2,16 @@ name: Bump Version
 # Workflow must be triggered manually
 on: 
   workflow_dispatch:
+    inputs:
+      part:
+        description: 'Part of the version to be bumped.'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+        - patch
+        - minor
+        - major
 permissions:
   contents: write
 jobs:
@@ -11,7 +21,9 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install dependencies
         run: |
-          pip install bump2version
+          pip install bump2version ${PART} --tag --verbose
+        env:
+          PART: ${{ inputs.part }}
       - name: Bump version
         run: |
           git config --global user.name 'thequilo'
